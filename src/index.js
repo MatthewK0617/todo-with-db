@@ -25,13 +25,13 @@ function App() {
     setTodos(newTodos);
   };
 
-  let addTodo = () => {
+  let addTodo = async () => {
     let obj = {
-      txt: "hi",
+      txt: newTxt,
       author: "Mehtewgeem"
     };
-    let docref = db.collection("todos").add(obj); // docref uses id to REFER to the document
-    let doc = db
+    let docref = await db.collection("todos").add(obj); // docref uses id to REFER to the document
+    let doc = await db
       .collection("todos")
       .doc(docref.id)
       .get();
@@ -40,6 +40,8 @@ function App() {
 
   function onSubmit(event) {
     event.preventDefault();
+    setNewTxt("");
+    addTodo();
   }
 
   return (
@@ -61,6 +63,7 @@ function App() {
           value={newTxt}
           onChange={event => setNewTxt(event.target.value)}
         />
+        <button>ADD</button>
       </form>
     </div>
   );
